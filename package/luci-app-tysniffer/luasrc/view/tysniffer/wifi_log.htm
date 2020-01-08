@@ -1,0 +1,69 @@
+<%#
+ Copyright 2019 skycomm <11657924@qq.com>
+ Licensed to the public under the Apache License 2.0.
+-%>
+
+<% css = [[
+
+	#log_text {
+		padding: 10px;
+		text-align: left;
+	}
+	#log_text pre {
+		word-break: break-all;
+		margin: 0;
+	}
+	.description {
+		background-color: #33ccff;
+	}
+
+]]
+%>
+
+<%+header%>
+<script type="text/javascript" src="<%=resource%>/cbi.js"></script>
+<script type="text/javascript">//<![CDATA[
+
+	XHR.poll(3, '<%=luci.dispatcher.build_url("admin/services/tysniffer/read")%>', null,
+		function (x, data) {
+			var logElm = document.getElementById('wifi_log');
+			if (logElm) {
+				logElm.innerHTML = data
+					? String.format(
+						data.log || '<%:No log data...%>'
+					)
+					: '<%:Error get log data.%>';
+			}
+		}
+	);
+
+	function log_clear(type, btn) {
+		btn.disabled = true;
+		btn.value = '<%:Processing...%>';
+		(new XHR()).get('<%=luci.dispatcher.build_url("admin/services/tysniffer/clear")%>/' + type,
+			{ token: '<%=token%>' },
+			function (x, json) {
+				btn.disabled = false;
+				btn.value = btn.placeholder;
+			}
+		);
+		return false;
+	}
+
+//]]></script>
+
+<fieldset class="cbi-section">
+	<!-- <legend><%:Client Log%></legend> -->
+	<div class="cbi-section-descr">
+		<input type="button" class="cbi-button" value="<%:Clear Log File%>" placeholder="<%:Clear Log File%>"
+			onclick="return log_clear('client', this)" />
+	</div>
+
+	<fieldset class="cbi-section-node">
+		<textarea class="cbi-input-textarea" style="width: 100%; resize: none;" id="wifi_log" rows="50"
+			readonly="true">
+        <%-:No log data...-%>
+        </textarea>
+	</fieldset>
+</fieldset>
+<%+footer%>

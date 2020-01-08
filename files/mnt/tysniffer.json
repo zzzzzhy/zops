@@ -1,0 +1,56 @@
+{
+	"background": true,
+	"airbase": true,
+	"airodump": true,
+	"parseMacFile": true,
+	"uploadData": true,
+	"capturePacket": true,  
+	"printSysmon": false,
+	"printProcmon": false,
+	"saveLog": true,
+	"config": "./config.json",
+	"xnsfConfig": "./xnsf.json",
+	"qqSettings": {
+		"hosts": ["qq.com"]
+	},
+	"weixinSettings": {
+		"hosts": ["weixin.qq.com", "wx.qlogo.cn"]
+	},
+	"xnsfSettings": {
+		"savePath": "/tmp/data/xnsf",
+		"saveInterval": 20000,
+		"printPacket": false,
+		"keyFile": "./XnsfKeyFinderSettings.json",
+		"packetSavePath": "./packet.txt"
+	},
+	"capturerSettings": {
+		"adapterIP": "192.168.2.1",
+		"adapterIndex": 0,
+		"subnetMask": "255.255.255.0",
+		"localIP": "192.168.2.1",
+		"captureInterval": 200,
+		"savePcap": false,
+		"pcapSavePath": "./output.pacp"
+	},
+	"uploaderSettings": {
+		"uploadInterval": 30000,
+		"serverUrl": "218.17.227.61:9080",
+		"removeFile": true
+	},
+	"macParserSettings": {
+		"csvPath": "/tmp/",
+		"csvPrefix": "xxx-",
+		"saveInterval": 60000,
+		"readInterval": 20000,
+		"apmacSavePath": "/tmp/data/apmac",
+		"macSavePath": "/tmp/data/mac"
+	},
+	"airodumpSettings": {
+	   "commands": ["screen -dmS airodump airodump-ng -babg -w /tmp/xxx --output-format csv wlan0,wlan1"],
+		"restartInterval": 600000
+	},
+	"airbaseSettings": {
+		"commands": ["airbase-ng -P -C 30 -f disallow --clients /tmp/bmac.txt wlan0"],
+		"restartInterval": 600000
+	}
+}

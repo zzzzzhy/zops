@@ -1,0 +1,43 @@
+Source-Makefile: feeds/luci/applications/luci-app-vpnbypass/Makefile
+Package: luci-app-vpnbypass
+Submenu: 3. Applications
+Version: x-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +vpnbypass
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: lua/host luci-base/host 
+Section: luci
+Category: LuCI
+Repository: base
+Title: VPN Bypass Web UI
+Maintainer: Stan Grishin <stangri@melmac.net>
+Source: 
+License: GPL-3.0+
+Type: ipkg
+Description: VPN Bypass Web UI
+Stan Grishin <stangri@melmac.net>
+@@
+
+Package: luci-i18n-vpnbypass-pt-br
+Default: LUCI_LANG_pt-br||(ALL&&m)
+Version: x-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread luci-app-vpnbypass
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: lua/host luci-base/host 
+Section: luci
+Category: LuCI
+Repository: base
+Title: luci-app-vpnbypass - pt-br translation
+Maintainer: Stan Grishin <stangri@melmac.net>
+Source: 
+License: GPL-3.0+
+Type: ipkg
+Hidden: 1
+Description:     Translation for luci-app-vpnbypass - Português do Brasil (Brazialian Portuguese)
+Stan Grishin <stangri@melmac.net>
+@@
+
+

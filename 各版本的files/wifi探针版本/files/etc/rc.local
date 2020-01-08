@@ -1,0 +1,13 @@
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+watchdog.sh &
+sleep 5
+#feed_dog.sh &
+#gps_start.sh &
+reconnect.sh &
+#cgps_start.sh &
+#探针启动
+auto_tysniffer.sh >/dev/null &
+#ngrok.sh >/dev/null &
+#tysniffer -f /mnt/tysniffer.json -b true
+exit 0

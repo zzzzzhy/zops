@@ -1,0 +1,43 @@
+Source-Makefile: feeds/luci/applications/luci-app-frpc/Makefile
+Package: luci-app-frpc
+Submenu: 3. Applications
+Version: 1.2.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: lua/host luci-base/host 
+Section: luci
+Category: LuCI
+Repository: base
+Title: LuCI support for Frpc
+Maintainer: Xingwang Liao <kuoruan@gmail.com>
+Source: 
+License: MIT
+Type: ipkg
+Description: LuCI support for Frpc
+Xingwang Liao <kuoruan@gmail.com>
+@@
+
+Package: luci-i18n-frpc-zh-cn
+Default: LUCI_LANG_zh-cn||(ALL&&m)
+Version: 1.2.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread luci-app-frpc
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: lua/host luci-base/host 
+Section: luci
+Category: LuCI
+Repository: base
+Title: luci-app-frpc - zh-cn translation
+Maintainer: Xingwang Liao <kuoruan@gmail.com>
+Source: 
+License: MIT
+Type: ipkg
+Hidden: 1
+Description:     Translation for luci-app-frpc - 中文 (Chinese)
+Xingwang Liao <kuoruan@gmail.com>
+@@
+
+

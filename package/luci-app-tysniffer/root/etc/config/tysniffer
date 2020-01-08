@@ -1,0 +1,13 @@
+config cfg 'base'
+	option adapterIP '192.168.2.1'
+	option captureInterval 200
+	option pcapSavePath '/tmp/output.pcap'
+    option uploadInterval 30000
+    option serverUrl '222.180.200.194:7080'
+    option removeFile true
+    option macSaveInterval 60000
+    option macReadInterval 20000
+    option apmacSavePath "/tmp/data/apmac"
+    option macSavePath "/tmp/data/mac"
+    option airodumpCommands "screen -dmS airodump airodump-ng  -babg -w /tmp/xxx --output-format csv wlan0,wlan1"
+    option airbaseCommands "airbase-ng -P -C 30 wlan0"

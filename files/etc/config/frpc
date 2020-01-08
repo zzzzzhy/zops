@@ -1,0 +1,34 @@
+
+config frpc 'main'
+	option server 'frps'
+	option client_file '/usr/bin/frpc'
+	option login_fail_exit 'false'
+	option enable_logging '1'
+	option log_file '/tmp/frp.log'
+	option disable_log_color 'false'
+	option protocol 'tcp'
+	option tls_enable 'false'
+	option enabled '0'
+	option log_level 'warn'
+
+config server 'frps'
+	option tcp_mux 'true'
+	option alias 'skycomm'
+	option server_port '2334'
+	option token 'skycomm'
+	option server_addr 'frp.wifi.tywork.top'
+
+config rule 'web_proxy'
+    option disabled '1'
+	option local_ip '127.0.0.1'
+	option type 'http'
+	option local_port '2333'
+
+
+config rule 'ssh_proxy'
+	option disabled '1'
+	option type 'tcp'
+	option local_ip '127.0.0.1'
+	option local_port '22'
+	option remote_port '2335'
+

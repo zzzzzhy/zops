@@ -1,0 +1,13 @@
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "802.1x Client"
+msgstr "802.1x 客户端"
+
+msgid ""
+"Configure IEEE 802.1x wired authentication, you may need to edit your LAN2 interface IP <a href=\"network\">here</a>"
+msgstr ""
+"IEEE 802.1x 有线拨号客户端, 使用前需要将LAN2"
+"IP配置好. <a href=\"network\">点击这里</a>"
+

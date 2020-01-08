@@ -1,0 +1,93 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: luci-app-tysniffer/luasrc/controller/tysniffer.lua:15
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/wifi_log.lua:9
+msgid "Wifi Log"
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/controller/tysniffer.lua:11
+#: luci-app-tysniffer/luasrc/controller/tysniffer.lua:13
+msgid "Tysniffer Config"
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/wifi_log.lua:10
+msgid "The data is refreshed every 3 seconds."
+msgstr ""
+
+#: luasrc/view/tysniffer/wifi_log.htm:33
+msgid "No log data..."
+msgstr ""
+
+#: luasrc/view/tysniffer/wifi_log.htm:58
+msgid "Clear Log File"
+msgstr ""
+
+#: luasrc/view/tysniffer/wifi_log.htm:42
+msgid "Processing..."
+msgstr ""
+
+#: luasrc/view/tysniffer/wifi_log.htm:35
+msgid "Error get log data."
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/config.lua:9
+msgid "tysniffer config item"
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/config.lua:15
+msgid "Capture packet adapter IP"
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/config.lua:19
+msgid "Capture packet captureInterval (μs)"
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/config.lua:23
+msgid "Save the pcap file"
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/config.lua:29
+msgid "Save the pcap file path"
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/config.lua:33
+msgid "Data upload interval (ms)"
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/config.lua:37
+msgid "Upload server address"
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/config.lua:41
+msgid "Delete after upload"
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/config.lua:47
+msgid "Single MAC deduplication time (ms)"
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/config.lua:51
+msgid "File resolution interval (ms)"
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/config.lua:55
+msgid "Apmac saves the directory"
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/config.lua:58
+msgid "mac saves the directory"
+msgstr ""
+
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/config.lua:61
+msgid "airodump"
+msgstr ""
+
+#: luci-app-tysniffer/luasrc/model/cbi/tysniffer/config.lua:64
+msgid "airbase"
+msgstr ""
+
+#: luasrc/view/tysniffer/status_header.htm:12
+msgid "Server running status checking..."
+msgstr ""

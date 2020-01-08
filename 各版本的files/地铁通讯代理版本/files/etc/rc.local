@@ -1,0 +1,15 @@
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+watchdog.sh &
+sleep 5
+#gps_start.sh &
+#cgps_start.sh &
+#4G网络重连
+#reconnect.sh &
+#探针启动
+#tysniffer -f /mnt/tysniffer.json -b true
+#通讯代理
+SkycommAgent
+#802.1x认证
+#IEEE802.1x.sh &
+exit 0
