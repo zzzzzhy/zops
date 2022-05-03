@@ -147,6 +147,9 @@ zbtlink,zbt-wg1608-16m)
 	ucidef_set_led_netdev "lan3" "LAN3" "green:lan-3" "lan3"
 	ucidef_set_led_netdev "lan4" "LAN4" "green:lan-4" "lan4"
 	ucidef_set_led_netdev "wan" "WAN" "green:wan" "wan"
+hitosea,wr1800k-ax-nand)
+	ucidef_set_led_netdev "wan" "wan" "ether:blue" "wan" "link"
+	ucidef_set_led_netdev "wifi2g" "Wifi 2.4G" "wlan:green" "wlan0" "link"
 	;;
 esac
 
