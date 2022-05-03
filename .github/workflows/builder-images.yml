@@ -5,11 +5,12 @@
 #
 # Copyright (C) 2020 KFERMercer
 #
-name: OpenWrt-CI
+name: builder-images
 
+env:
+  CONFIG_FILE: user-defined/.config
+  
 on:
-  schedule:
-    - cron: 0 20 * * *
   release:
     types: [published]
 
@@ -19,7 +20,7 @@ jobs:
 
     name: Build OpenWrt firmware
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     if: github.event.repository.owner.id == github.event.sender.id
 
@@ -46,9 +47,12 @@ jobs:
 
       - name: Update feeds
         run: |
-          sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
+          
+      - name: Load custom configuration
+        run: |
+          [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
 
       - name: Generate configuration file
         run: make defconfig
