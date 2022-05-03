@@ -2,3 +2,6 @@ src-git-full packages https://git.openwrt.org/feed/packages.git^3d33fa3b09414f8a
 src-git-full luci https://git.openwrt.org/project/luci.git^990aa4fc6b80706cafec8d63e05085b45217c364
 src-git-full routing https://git.openwrt.org/feed/routing.git^48f6120ad4b8c1515d29110c6291ff7e264fef29
 src-git-full telephony https://git.openwrt.org/feed/telephony.git^4c148548df2aae3c036a5e309ff0474dbb1f48ac
+src-git openappfilter https://github.com/destan19/OpenAppFilter.git
+src-git clash https://github.com/vernesong/OpenClash.git
+src-git helloworld https://github.com/fw876/helloworld.git
