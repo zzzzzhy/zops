@@ -78,7 +78,7 @@ platform_do_upgrade() {
 	xiaomi,mi-router-4|\
 	xiaomi,mi-router-ac2100|\
 	xiaomi,redmi-router-ac2100|\
-	wrt,wr1800k-ax-nand|\
+	xwrt,wr1800k-ax-nand|\
 	hitosea,wr1800k-ax-nand)
 		nand_do_upgrade "$1"
 		;;
