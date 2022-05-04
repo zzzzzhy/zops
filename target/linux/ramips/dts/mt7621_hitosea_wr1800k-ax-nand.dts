@@ -117,19 +117,16 @@
 };
 
 &gmac0 {
-	nvmem-cells = <&macaddr_factory_4>;
+	nvmem-cells = <&macaddr_factory_28>;
 	nvmem-cell-names = "mac-address";
-	mtd-mac-address = <&factory 0x4>;
-	mac-address-increment = <(-2)>;
 };
 
 &gmac1 {
 	status = "okay";
 	label = "wan";
-	nvmem-cells = <&macaddr_factory_4>;
+	nvmem-cells = <&macaddr_factory_28>;
 	nvmem-cell-names = "mac-address";
-	mtd-mac-address = <&factory 0x4>;
-	mac-address-increment = <(-1)>;
+	mac-address-increment = <(2)>;
 	phy-mode = "rgmii-txid";
 	phy-handle = <&phy4>;
 };
@@ -175,5 +172,9 @@
 
 	macaddr_factory_4: macaddr@4 {
 		reg = <0x4 0x6>;
+	};
+
+	macaddr_factory_28: macaddr@28 {
+		reg = <0x28 0x6>;
 	};
 };
