@@ -5,12 +5,11 @@ include $(TOPDIR)/rules.mk
 ARCH:=aarch64
 BOARD:=bcm4908
 BOARDNAME:=Broadcom BCM4908 (ARMv8A CPUs Brahma-B53)
-FEATURES:=squashfs nand usb pci pcie gpio
+FEATURES:=squashfs nand usb gpio
 CPU_TYPE:=cortex-a53
 SUBTARGETS:=generic
 
-KERNEL_PATCHVER:=5.4
-KERNEL_TESTING_PATCHVER:=5.4
+KERNEL_PATCHVER:=5.10
 
 define Target/Description
 	Build firmware images for Broadcom BCM4908 SoC family routers.

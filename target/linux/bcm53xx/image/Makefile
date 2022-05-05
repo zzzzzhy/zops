@@ -130,7 +130,7 @@ define Device/Default
   KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma-d16 | trx
   FILESYSTEMS := squashfs
   KERNEL_NAME := zImage
-  IMAGE_NAME = $$(IMAGE_PREFIX)-$$(1).$$(2)
+  DEVICE_IMG_NAME = $$(DEVICE_IMG_PREFIX)-$$(1).$$(2)
   IMAGES := trx
   BLOCKSIZE := 128k
   PAGESIZE := 2048
@@ -218,6 +218,7 @@ define Device/buffalo_wzr-900dhp
 	buffalo-enc WZR-900DHP2 $$(BUFFALO_TAG_VERSION) | \
 	buffalo-tag-dhp WZR-900DHP2 JP jp | buffalo-enc-tag | \
 	buffalo-dhp-image
+  BROKEN := y
 endef
 TARGET_DEVICES += buffalo_wzr-900dhp
 
@@ -317,7 +318,7 @@ TARGET_DEVICES += luxul_xwr-3150
 define Device/meraki_mr32
   DEVICE_VENDOR := Meraki
   DEVICE_MODEL := MR32
-  DEVICE_PACKAGES := $(B43) kmod-i2c-bcm-iproc kmod-i2c-gpio kmod-eeprom-at24 \
+  DEVICE_PACKAGES := $(B43) kmod-i2c-bcm-iproc kmod-eeprom-at24 \
 	kmod-leds-pwm kmod-hwmon-ina2xx kmod-bluetooth
   DEVICE_DTS := bcm53016-meraki-mr32
 # Meraki FW r23 tries to resize the part.safe partition before it will
@@ -325,10 +326,12 @@ define Device/meraki_mr32
 # if the partition is smaller than the old one.
   KERNEL_LOADADDR := 0x00008000
   KERNEL_INITRAMFS_SUFFIX := .bin
+  DEVICE_DTS_DELIMITER := @
+  DEVICE_DTS_CONFIG := config@1
   KERNEL_INITRAMFS := kernel-bin | fit none $$(DTS_DIR)/$$(DEVICE_DTS).dtb | \
 	pad-to 10362880
   KERNEL := kernel-bin | fit none $$(DTS_DIR)/$$(DEVICE_DTS).dtb
-  IMAGES := sysupgrade.bin
+  IMAGES += sysupgrade.bin
 # Currently the only device that uses the new image check
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 
@@ -434,7 +437,7 @@ define Device/tplink_archer-c5-v2
   TPLINK_BOARD := ARCHER-C5-V2
   BROKEN := y
 endef
-TARGET_DEVICES += tplink_archer-c5-v2
+#TARGET_DEVICES += tplink_archer-c5-v2
 
 define Device/tplink_archer-c9-v1
   DEVICE_VENDOR := TP-Link
@@ -446,6 +449,6 @@ define Device/tplink_archer-c9-v1
   TPLINK_BOARD := ARCHERC9
   BROKEN := y
 endef
-TARGET_DEVICES += tplink_archer-c9-v1
+#TARGET_DEVICES += tplink_archer-c9-v1
 
 $(eval $(call BuildImage))

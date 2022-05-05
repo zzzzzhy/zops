@@ -433,6 +433,7 @@ endef
 TARGET_DEVICES += dlink_dir-615-d
 
 define Device/dlink_dir-615-h1
+  $(Device/uimage-lzma-loader)
   SOC := rt3352
   BLOCKSIZE := 4k
   IMAGES += factory.bin
@@ -500,7 +501,7 @@ define Device/edimax_3g-6200n
   IMAGE_SIZE := 3648k
   IMAGE/sysupgrade.bin := append-kernel | append-rootfs | \
 	edimax-header -s CSYS -m 3G62 -f 0x50000 -S 0x01100000 | pad-rootfs | \
-	append-metadata | check-size
+	check-size | append-metadata
   DEVICE_VENDOR := Edimax
   DEVICE_MODEL := 3g-6200n
   SUPPORTED_DEVICES += 3g-6200n
@@ -513,7 +514,7 @@ define Device/edimax_3g-6200nl
   IMAGE_SIZE := 3648k
   IMAGE/sysupgrade.bin := append-kernel | append-rootfs | \
 	edimax-header -s CSYS -m 3G62 -f 0x50000 -S 0x01100000 | pad-rootfs | \
-	append-metadata | check-size
+	check-size | append-metadata
   DEVICE_VENDOR := Edimax
   DEVICE_MODEL := 3g-6200nl
   SUPPORTED_DEVICES += 3g-6200nl
@@ -989,7 +990,6 @@ define Device/teltonika_rut5xx
   IMAGE_SIZE := 16064k
   DEVICE_VENDOR := Teltonika
   DEVICE_MODEL := RUT5XX
-  DEVICE_PACKAGES := om-watchdog
   SUPPORTED_DEVICES += rut5xx
 endef
 TARGET_DEVICES += teltonika_rut5xx
@@ -1047,7 +1047,7 @@ define Device/trendnet_tew-638apb-v2
   BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
   IMAGE/sysupgrade.bin := $$(sysupgrade_bin) | umedia-header 0x026382 | \
-	append-metadata | check-size
+	check-size | append-metadata
   DEVICE_VENDOR := TRENDnet
   DEVICE_MODEL := TEW-638APB
   DEVICE_VARIANT := v2
@@ -1071,7 +1071,7 @@ define Device/unbranded_a5-v11
   IMAGES += factory.bin
   IMAGE/factory.bin := $$(sysupgrade_bin) | check-size | \
 	poray-header -B A5-V11 -F 4M
-  DEVICE_VENDOR :=
+  DEVICE_VENDOR := Unbranded
   DEVICE_MODEL := A5-V11
   DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2
   SUPPORTED_DEVICES += a5-v11
@@ -1082,7 +1082,7 @@ TARGET_DEVICES += unbranded_a5-v11
 define Device/unbranded_wr512-3gn-4m
   SOC := rt3052
   IMAGE_SIZE := 3776k
-  DEVICE_VENDOR := Ralink
+  DEVICE_VENDOR := Unbranded
   DEVICE_MODEL := WR512-3GN
   DEVICE_VARIANT := 4M
   SUPPORTED_DEVICES += wr512-3gn-4M
@@ -1093,7 +1093,7 @@ TARGET_DEVICES += unbranded_wr512-3gn-4m
 define Device/unbranded_wr512-3gn-8m
   SOC := rt3052
   IMAGE_SIZE := 7872k
-  DEVICE_VENDOR := Ralink
+  DEVICE_VENDOR := Unbranded
   DEVICE_MODEL := WR512-3GN
   DEVICE_VARIANT := 8M
   SUPPORTED_DEVICES += wr512-3gn-8M
@@ -1104,8 +1104,8 @@ define Device/unbranded_xdx-rn502j
   SOC := rt3052
   BLOCKSIZE := 64k
   IMAGE_SIZE := 3776k
-  DEVICE_VENDOR := XDX
-  DEVICE_MODEL := RN502J
+  DEVICE_VENDOR := Unbranded
+  DEVICE_MODEL := XDX-RN502J
   SUPPORTED_DEVICES += xdxrn502j
   DEFAULT := n
 endef

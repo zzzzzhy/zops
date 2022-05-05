@@ -38,6 +38,21 @@ endef
 
 $(eval $(call KernelPackage,ledtrig-activity))
 
+define KernelPackage/ledtrig-audio
+  SUBMENU:=$(LEDS_MENU)
+  TITLE:=LED Audio Mute Trigger
+  KCONFIG:=CONFIG_LEDS_TRIGGER_AUDIO
+  FILES:=$(LED_TRIGGER_DIR)/ledtrig-audio.ko
+  AUTOLOAD:=$(call AutoLoad,50,ledtrig-audio)
+endef
+
+define KernelPackage/ledtrig-audio/description
+ Kernel module that allows LEDs to be controlled by audio drivers
+ to follow audio mute and mic-mute changes.
+endef
+
+$(eval $(call KernelPackage,ledtrig-audio))
+
 define KernelPackage/ledtrig-gpio
   SUBMENU:=$(LEDS_MENU)
   TITLE:=LED GPIO Trigger
@@ -100,6 +115,22 @@ endef
 $(eval $(call KernelPackage,ledtrig-pattern))
 
 
+define KernelPackage/leds-apu
+  SUBMENU:=$(LEDS_MENU)
+  TITLE:=PC Engines APU1 LED support
+  DEPENDS:= @GPIO_SUPPORT @TARGET_x86
+  KCONFIG:=CONFIG_LEDS_APU
+  FILES:=$(LINUX_DIR)/drivers/leds/leds-apu.ko
+  AUTOLOAD:=$(call AutoLoad,60,leds-apu,1)
+endef
+
+define KernelPackage/leds-apu/description
+  Driver for the PC Engines APU1 LEDs.
+endef
+
+$(eval $(call KernelPackage,leds-apu))
+
+
 define KernelPackage/leds-pca963x
   SUBMENU:=$(LEDS_MENU)
   TITLE:=PCA963x LED support
@@ -131,6 +162,24 @@ endef
 
 $(eval $(call KernelPackage,leds-pwm))
 
+
+define KernelPackage/leds-tlc591xx
+  SUBMENU:=$(LEDS_MENU)
+  TITLE:=LED driver for TLC59108 and TLC59116 controllers
+  DEPENDS:=+kmod-i2c-core +kmod-regmap-i2c
+  KCONFIG:=CONFIG_LEDS_TLC591XX
+  FILES:=$(LINUX_DIR)/drivers/leds/leds-tlc591xx.ko
+  AUTOLOAD:=$(call AutoLoad,60,leds-tlc591xx,1)
+endef
+
+define KernelPackage/leds-tlc591xx/description
+ This option enables support for Texas Instruments TLC59108
+ and TLC59116 LED controllers.
+endef
+
+$(eval $(call KernelPackage,leds-tlc591xx))
+
+
 define KernelPackage/leds-uleds
   SUBMENU:=$(LEDS_MENU)
   TITLE:=Userspace LEDs
@@ -144,3 +193,20 @@ define KernelPackage/leds-uleds/description
 endef
 
 $(eval $(call KernelPackage,leds-uleds))
+
+
+define KernelPackage/input-leds
+  SUBMENU:=$(LEDS_MENU)
+  TITLE:=Input device LED support
+  DEPENDS:=+kmod-input-core
+  KCONFIG:=CONFIG_INPUT_LEDS
+  FILES:=$(LINUX_DIR)/drivers/input/input-leds.ko
+  AUTOLOAD:=$(call AutoLoad,50,input-leds,1)
+endef
+
+define KernelPackage/input-leds/description
+ Provides support for LEDs on input devices- for example,
+ keyboard num/caps/scroll lock.
+endef
+
+$(eval $(call KernelPackage,input-leds))

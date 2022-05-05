@@ -941,7 +941,7 @@ __ag71xx_link_adjust(struct ag71xx *ag, bool update)
 		 * The wr, rr functions cannot be used since this hidden register
 		 * is outside of the normal ag71xx register block.
 		 */
-		void __iomem *dam = ioremap_nocache(0xb90001bc, 0x4);
+		void __iomem *dam = ioremap(0xb90001bc, 0x4);
 		if (dam) {
 			__raw_writel(__raw_readl(dam) & ~BIT(27), dam);
 			(void)__raw_readl(dam);
@@ -1198,7 +1198,7 @@ static void ag71xx_oom_timer_handler(struct timer_list *t)
 	napi_schedule(&ag->napi);
 }
 
-static void ag71xx_tx_timeout(struct net_device *dev)
+static void ag71xx_tx_timeout(struct net_device *dev, unsigned int txqueue)
 {
 	struct ag71xx *ag = netdev_priv(dev);
 
@@ -1515,7 +1515,6 @@ static int ag71xx_probe(struct platform_device *pdev)
 	struct net_device *dev;
 	struct resource *res;
 	struct ag71xx *ag;
-	const void *mac_addr;
 	u32 max_frame_len;
 	int tx_size, err;
 
@@ -1584,18 +1583,24 @@ static int ag71xx_probe(struct platform_device *pdev)
 		ag->pllregmap = NULL;
 	}
 
-	ag->mac_base = devm_ioremap_nocache(&pdev->dev, res->start,
-					    res->end - res->start + 1);
+	ag->mac_base = devm_ioremap(&pdev->dev, res->start,
+				    res->end - res->start + 1);
 	if (!ag->mac_base)
 		return -ENOMEM;
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
 	if (res) {
-		ag->mii_base = devm_ioremap_nocache(&pdev->dev, res->start,
+		ag->mii_base = devm_ioremap(&pdev->dev, res->start,
 					    res->end - res->start + 1);
 		if (!ag->mii_base)
 			return -ENOMEM;
 	}
+
+	/* ensure that HW is in manual polling mode before interrupts are
+	 * activated. Otherwise ag71xx_interrupt might call napi_schedule
+	 * before it is initialized by netif_napi_add.
+	 */
+	ag71xx_int_disable(ag, AG71XX_INT_POLL);
 
 	dev->irq = platform_get_irq(pdev, 0);
 	err = devm_request_irq(&pdev->dev, dev->irq, ag71xx_interrupt,
@@ -1664,16 +1669,14 @@ static int ag71xx_probe(struct platform_device *pdev)
 	ag->stop_desc->ctrl = 0;
 	ag->stop_desc->next = (u32) ag->stop_desc_dma;
 
-	mac_addr = of_get_mac_address(np);
-	if (IS_ERR_OR_NULL(mac_addr) || !is_valid_ether_addr(mac_addr)) {
+	of_get_mac_address(np, dev->dev_addr);
+	if (!is_valid_ether_addr(dev->dev_addr)) {
 		dev_err(&pdev->dev, "invalid MAC address, using random address\n");
 		eth_random_addr(dev->dev_addr);
-	} else {
-		memcpy(dev->dev_addr, mac_addr, ETH_ALEN);
 	}
 
-	ag->phy_if_mode = of_get_phy_mode(np);
-	if (ag->phy_if_mode < 0) {
+	err = of_get_phy_mode(np, &ag->phy_if_mode);
+	if (err < 0) {
 		dev_err(&pdev->dev, "missing phy-mode property in DT\n");
 		return ag->phy_if_mode;
 	}

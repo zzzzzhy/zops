@@ -14,6 +14,7 @@
 #include <linux/module.h>
 #include <linux/dma-mapping.h>
 #include <linux/mtd/mtd.h>
+#include <linux/mtd/nand.h>
 #include <linux/mtd/rawnand.h>
 #include <linux/mtd/partitions.h>
 #include <linux/platform_device.h>
@@ -719,7 +720,7 @@ static void ar934x_nfc_cmdfunc(struct nand_chip *nand, unsigned int command,
 		break;
 
 	case NAND_CMD_PAGEPROG:
-		if (nand->ecc.mode == NAND_ECC_HW) {
+		if (nand->ecc.engine_type == NAND_ECC_ENGINE_TYPE_ON_HOST) {
 			/* the data is already written */
 			break;
 		}
@@ -1327,15 +1328,15 @@ static int ar934x_nfc_attach_chip(struct nand_chip *nand)
 	if (mtd->writesize == 2048)
 		nand->options |= NAND_NO_SUBPAGE_WRITE;
 
-	if (nand->ecc.mode == NAND_ECC_HW) {
+	if (nand->ecc.engine_type == NAND_ECC_ENGINE_TYPE_ON_HOST) {
 		ret = ar934x_nfc_setup_hwecc(nfc);
 		if (ret)
 			return ret;
-	} else if (nand->ecc.mode != NAND_ECC_SOFT) {
-		dev_err(dev, "unknown ECC mode %d\n", nand->ecc.mode);
+	} else if (nand->ecc.engine_type != NAND_ECC_ENGINE_TYPE_SOFT) {
+		dev_err(dev, "unknown ECC mode %d\n", nand->ecc.engine_type);
 		return -EINVAL;
-	} else if ((nand->ecc.algo != NAND_ECC_BCH) &&
-		   (nand->ecc.algo != NAND_ECC_HAMMING)) {
+	} else if ((nand->ecc.algo != NAND_ECC_ALGO_BCH) &&
+		   (nand->ecc.algo != NAND_ECC_ALGO_HAMMING)) {
 		dev_err(dev, "unknown software ECC algo %d\n", nand->ecc.algo);
 		return -EINVAL;
 	}
@@ -1424,7 +1425,7 @@ static int ar934x_nfc_probe(struct platform_device *pdev)
 	nand->legacy.read_byte = ar934x_nfc_read_byte;
 	nand->legacy.write_buf = ar934x_nfc_write_buf;
 	nand->legacy.read_buf = ar934x_nfc_read_buf;
-	nand->ecc.mode = NAND_ECC_HW;	/* default */
+	nand->ecc.engine_type = NAND_ECC_ENGINE_TYPE_ON_HOST;	/* default */
 	nand->priv = nfc;
 	platform_set_drvdata(pdev, nfc);
 
@@ -1464,7 +1465,8 @@ static int ar934x_nfc_remove(struct platform_device *pdev)
 
 	nfc = platform_get_drvdata(pdev);
 	if (nfc) {
-		nand_release(&nfc->nand_chip);
+		mtd_device_unregister(nand_to_mtd(&nfc->nand_chip));
+		nand_cleanup(&nfc->nand_chip);
 		ar934x_nfc_free_buf(nfc);
 	}
 

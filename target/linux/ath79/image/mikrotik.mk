@@ -22,7 +22,8 @@ define Device/mikrotik_routerboard-921gs-5hpacd-15s
   $(Device/mikrotik_nand)
   SOC := qca9558
   DEVICE_MODEL := RouterBOARD 921GS-5HPacD-15s (mANTBox 15s)
-  DEVICE_PACKAGES += kmod-ath10k-ct ath10k-firmware-qca988x-ct
+  DEVICE_PACKAGES += kmod-ath10k-ct ath10k-firmware-qca988x-ct kmod-i2c-gpio \
+	kmod-sfp
   SUPPORTED_DEVICES += rb-921gs-5hpacd-r2
 endef
 TARGET_DEVICES += mikrotik_routerboard-921gs-5hpacd-15s
@@ -37,6 +38,17 @@ define Device/mikrotik_routerboard-922uags-5hpacd
 endef
 TARGET_DEVICES += mikrotik_routerboard-922uags-5hpacd
 
+define Device/mikrotik_routerboard-962uigs-5hact2hnt
+  $(Device/mikrotik_nor)
+  SOC := qca9558
+  DEVICE_MODEL := RouterBOARD 962UiGS-5HacT2HnT (hAP ac)
+  DEVICE_PACKAGES += kmod-ath10k-ct ath10k-firmware-qca988x-ct kmod-usb2 \
+	kmod-i2c-gpio kmod-sfp
+  IMAGE_SIZE := 16256k
+  SUPPORTED_DEVICES += rb-962uigs-5hact2hnt
+endef
+TARGET_DEVICES += mikrotik_routerboard-962uigs-5hact2hnt
+
 define Device/mikrotik_routerboard-lhg-2nd
   $(Device/mikrotik_nor)
   SOC := qca9533
@@ -44,6 +56,15 @@ define Device/mikrotik_routerboard-lhg-2nd
   IMAGE_SIZE := 16256k
 endef
 TARGET_DEVICES += mikrotik_routerboard-lhg-2nd
+
+define Device/mikrotik_routerboard-lhg-5nd
+  $(Device/mikrotik_nor)
+  SOC := ar9344
+  DEVICE_MODEL := RouterBOARD LHG 5nD (LHG 5)
+  DEVICE_PACKAGES += rssileds
+  IMAGE_SIZE := 16256k
+endef
+TARGET_DEVICES += mikrotik_routerboard-lhg-5nd
 
 define Device/mikrotik_routerboard-mapl-2nd
   $(Device/mikrotik_nor)
@@ -76,7 +97,15 @@ define Device/mikrotik_routerboard-wapr-2nd
   $(Device/mikrotik_nor)
   SOC := qca9533
   DEVICE_MODEL := RouterBOARD wAPR-2nD (wAP R)
-  DEVICE_PACKAGES += rssileds
+  DEVICE_PACKAGES += kmod-usb2 rssileds
   IMAGE_SIZE := 16256k
 endef
 TARGET_DEVICES += mikrotik_routerboard-wapr-2nd
+
+define Device/mikrotik_routerboard-wap-2nd
+  $(Device/mikrotik_nor)
+  SOC := qca9533
+  DEVICE_MODEL := RouterBOARD wAP-2nD (wAP)
+  IMAGE_SIZE := 16256k
+endef
+TARGET_DEVICES += mikrotik_routerboard-wap-2nd

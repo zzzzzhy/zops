@@ -1,5 +1,3 @@
-#!/bin/sh
-
 [ -e /etc/config/ubootenv ] && exit 0
 
 touch /etc/config/ubootenv
@@ -13,6 +11,9 @@ case "$board" in
 ocedo,panda)
 	ubootenv_add_uci_config "/dev/mtd1" "0x0" "0x20000" "0x20000"
 	ubootenv_add_uci_config "/dev/mtd2" "0x0" "0x20000" "0x20000"
+	;;
+aerohive,hiveap-330)
+	ubootenv_add_uci_config "$(find_mtd_part 'u-boot-env')" "0x0" "0x20000" "0x10000"
 	;;
 esac
 

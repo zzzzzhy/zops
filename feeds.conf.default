@@ -1,4 +1,4 @@
-src-git packages https://git.openwrt.org/feed/packages.git^78bcd00c13587571b5c79ed2fc3363aa674aaef7
-src-git luci https://git.openwrt.org/project/luci.git^fe09ab990256d8b63e76cc1ab2435baef921b8b4
-src-git routing https://git.openwrt.org/feed/routing.git^a0d61bddb3ce4ca54bd76af86c28f58feb6cc044
-src-git telephony https://git.openwrt.org/feed/telephony.git^0183c1adda0e7581698b0ea4bff7c08379acf447
+src-git-full packages https://git.openwrt.org/feed/packages.git^3d33fa3b09414f8a79e1e8f98d64d41b26235e12
+src-git-full luci https://git.openwrt.org/project/luci.git^990aa4fc6b80706cafec8d63e05085b45217c364
+src-git-full routing https://git.openwrt.org/feed/routing.git^48f6120ad4b8c1515d29110c6291ff7e264fef29
+src-git-full telephony https://git.openwrt.org/feed/telephony.git^4c148548df2aae3c036a5e309ff0474dbb1f48ac
