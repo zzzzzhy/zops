@@ -1,0 +1,20 @@
+cat >>.config<<EOF
+CONFIG_PACKAGE_libip6tc=y
+CONFIG_PACKAGE_kmod-ipt-conntrack=y
+CONFIG_PACKAGE_kmod-ipt-nat=y
+CONFIG_PACKAGE_kmod-wireguard=y
+CONFIG_PACKAGE_wireguard-tools=y
+CONFIG_PACKAGE_bash=y
+CONFIG_PACKAGE_kmod-sched-core=y
+CONFIG_PACKAGE_kmod-ifb=y
+CONFIG_PACKAGE_tc-tiny=y
+CONFIG_PACKAGE_ip-full=y
+CONFIG_PACKAGE_resolveip=y
+CONFIG_PACKAGE_coreutils-timeout=y
+CONFIG_PACKAGE_coreutils-base64=y
+CONFIG_PACKAGE_libev=y
+CONFIG_PACKAGE_ipset=y
+CONFIG_PACKAGE_lua-cjson=y
+CONFIG_PACKAGE_libiwinfo-lua=y
+CONFIG_PACKAGE_liblua=y
+EOF
