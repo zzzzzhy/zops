@@ -1,0 +1,204 @@
+#include "mt7621.dtsi"
+#include <dt-bindings/input/input.h>
+
+/ {
+	compatible = "rfb-z2101ax-nor-dsim", "mediatek,mt7621-rfb-nor", "mediatek,mt7621-soc";
+	model = "MediaTek MT7621 RFB (802.11ax,SNOR) Z2101AX";
+
+	chosen {
+		bootargs = "console=ttyS0,115200";
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		red {
+			label = "red";
+			gpios = <&gpio 4 GPIO_ACTIVE_HIGH>;
+		};
+		green {
+			label = "green";
+			gpios = <&gpio 3 GPIO_ACTIVE_LOW>;
+		};
+		blue {
+			label = "blue";
+			gpios = <&gpio 16 GPIO_ACTIVE_LOW>;
+		};
+		4g{
+			label = "4g";
+			gpios = <&gpio 6 GPIO_ACTIVE_LOW>;
+		};
+		sys{
+			label = "sys";
+			gpios = <&gpio 10 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	keys {
+		compatible = "gpio-keys-polled";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		poll-interval = <20>;
+
+		reset {
+			label = "reset";
+			gpios = <&gpio 18 GPIO_ACTIVE_LOW>;
+			linux,code = <KEY_RESTART>;
+		};
+
+		mesh {
+			label = "mesh";
+			gpios = <&gpio 15 GPIO_ACTIVE_LOW>;
+			linux,code = <BTN_0>;
+		};
+	};
+	
+	gpio_export {
+		compatible = "gpio-export";
+		4g {
+			gpio-export,name = "4g";
+			gpio-export,output = <1>;
+			gpios = <&gpio 14 GPIO_ACTIVE_LOW>;
+		};
+		wdg {
+			gpio-export,name = "wdg";
+			gpio-export,output = <1>;
+			gpios = <&gpio 13 GPIO_ACTIVE_LOW>;
+		};
+		sim {
+			gpio-export,name = "sim";
+			gpio-export,output = <1>;
+			gpios = <&gpio 8 GPIO_ACTIVE_LOW>;
+		};
+	};
+};
+
+&pcie {
+	status = "okay";
+};
+
+&pcie0 {
+	wifi@0,0 {
+		reg = <0x0000 0 0 0 0>;
+        nvmem-cells = <&macaddr_factory_8004>;
+        nvmem-cell-names = "mac-address";
+	};
+};
+
+&pcie1 {
+	wifi@0,0 {
+		reg = <0x0000 0 0 0 0>;
+		mediatek,mtd-eeprom = <&factory 0x0000>;
+	};
+};
+
+&gmac0 {
+	nvmem-cells = <&macaddr_factory_3fff4>;
+	nvmem-cell-names = "mac-address";
+};
+
+&switch0 {
+	ports {
+		wan_port: port@4 {
+			status = "okay";
+			label = "wan";
+			nvmem-cells = <&macaddr_factory_3fffa>;
+			nvmem-cell-names = "mac-address";
+		};
+		port@1 {
+			status = "okay";
+			label = "lan1";
+		};
+		port@2 {
+			status = "okay";
+			label = "lan2";
+		};
+		port@3 {
+			status = "okay";
+			label = "lan3";
+		};
+	};
+};
+
+&state_default {
+	gpio {
+		groups = "i2c", "jtag", "uart2", "uart3", "wdt";
+		function = "gpio";
+	};
+};
+
+&spi0 {
+	status = "okay";
+
+	flash@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "jedec,spi-nor";
+		reg = <0>;
+		spi-max-frequency = <10000000>;
+		
+        partitions {
+            compatible = "fixed-partitions";
+            #address-cells = <1>;
+            #size-cells = <1>;
+			partition@0 {
+				label = "Bootloader";
+				reg = <0x00000 0x30000>;
+			};
+
+			partition@30000 {
+				label = "Config";
+				reg = <0x30000 0x10000>;
+			};
+
+			factory:partition@50000 {
+				label = "Factory";
+				reg = <0x50000 0x40000>;
+			};
+
+			partition@90000 {
+				compatible = "denx,fit";
+				label = "firmware";
+				reg = <0x90000 0xf70000>;
+			};
+		};
+	};
+};
+
+&uartlite2 {
+	status = "okay";
+};
+
+&uartlite3 {
+	status = "okay";
+};
+
+&sdhci {
+	status = "okay";
+};
+
+/* &u3phy1 {
+	status = "okay";
+}; */
+
+&xhci {
+	status = "okay";
+};
+
+&factory {
+	compatible = "nvmem-cells";
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	macaddr_factory_3fff4: macaddr@3fff4 {
+		reg = <0x3fff4 0x6>;
+	};
+
+	macaddr_factory_8004: macaddr@8004 {
+		reg = <0x8004 0x6>;
+	};
+
+	macaddr_factory_3fffa: macaddr@3fffa {
+		reg = <0x3fffa 0x6>;
+	};
+};

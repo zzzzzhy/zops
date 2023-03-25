@@ -2262,3 +2262,34 @@ define Device/zyxel_wap6805
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
 TARGET_DEVICES += zyxel_wap6805
+
+define Device/cf-wr619ac
+  $(Device/dsa-migration)
+  $(Device/uimage-lzma-loader)
+  IMAGE_SIZE := 15744k
+  DEVICE_MODEL := CF-WR619AC
+  BLOCKSIZE := 64k
+  DEVICE_PACKAGES := kmod-mt7615e kmod-mt7603 kmod-mt7615-firmware 
+  DEVICE_TITLE := CF-WR619AC
+endef
+TARGET_DEVICES += cf-wr619ac
+
+define Device/rfb-z2101ax-nor-dsim
+  $(Device/dsa-migration)
+  DEVICE_MODEL := RFB-Z2101AX-NOR-DSIM
+  DEVICE_DTS_CONFIG := config@1
+  DEVICE_PACKAGES += kmod-mt7915e
+  KERNEL := kernel-bin | lzma | fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
+  IMAGE_SIZE := 15808k
+endef
+TARGET_DEVICES += rfb-z2101ax-nor-dsim
+
+define Device/rfb-ax5400p-nor
+  $(Device/dsa-migration)
+  DEVICE_MODEL := RFB-AX5400P-NOR
+  DEVICE_DTS_CONFIG := config@1
+  DEVICE_PACKAGES += kmod-mt7915e kmod-mt7916-firmware
+  KERNEL := kernel-bin | lzma | fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
+  IMAGE_SIZE := 15808k
+endef
+TARGET_DEVICES += rfb-ax5400p-nor

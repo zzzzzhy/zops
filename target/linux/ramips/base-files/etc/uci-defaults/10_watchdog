@@ -1,0 +1,35 @@
+. /lib/functions.sh
+
+function add_watchdog()
+{
+cat >/sbin/watchdog<<EOF
+wd_gpio="$1"
+echo 1 >/sys/class/gpio/wdg/value
+sleep 1
+echo 0 >/sys/class/gpio/wdg/value
+sleep 1
+EOF
+chmod +x /sbin/watchdog
+cat >/etc/init.d/watchdog<<EOF
+#!/bin/sh /etc/rc.common
+START=99
+start() {
+    wd_gpio="$1"
+#    echo \$wd_gpio > /sys/class/gpio/export
+#    echo out > /sys/class/gpio/gpio\$wd_gpio/direction
+    [ -z "\$(crontab -l|grep watchdog)" ] && echo "* * * * * watchdog" >>/etc/crontabs/root
+    /etc/init.d/cron reload
+}
+EOF
+chmod +x /etc/init.d/watchdog
+/etc/init.d/watchdog enable
+/etc/init.d/watchdog start
+}
+board=$(board_name)
+case "$board" in
+    rfb-z2101ax-nor-dsim)
+        add_watchdog 13
+		;;
+esac
+
+

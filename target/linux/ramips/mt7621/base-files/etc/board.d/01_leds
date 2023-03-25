@@ -157,6 +157,10 @@ zbtlink,zbt-wg1608-16m)
 	ucidef_set_led_netdev "lan4" "LAN4" "green:lan-4" "lan4"
 	ucidef_set_led_netdev "wan" "WAN" "green:wan" "wan"
 	;;
+cf-wr619ac)
+	ucidef_set_led_netdev "wlan2" "WiFi 2.4GHz" "blue:wifi2" "wlan0"
+	ucidef_set_led_netdev "wlan5" "WiFi 5GHz" "blue:wifi5" "wlan1"
+	;;
 esac
 
 board_config_flush

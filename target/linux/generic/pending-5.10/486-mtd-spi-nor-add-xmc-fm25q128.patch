@@ -1,0 +1,10 @@
+--- a/drivers/mtd/spi-nor/xmc.c	2023-03-16 21:04:27.326731571 +0000
++++ b/drivers/mtd/spi-nor/xmc.c	2023-03-17 02:30:53.115998237 +0000
+@@ -16,6 +16,7 @@ static const struct flash_info xmc_parts
+ 			     SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
+ 	{ "XM25QH128C", INFO(0x204018, 0, 64 * 1024, 256,
+ 			     SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
++	{ "FM25Q128", INFO(0xa14018, 0, 64 * 1024,  256, SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
+ };
+ 
+ const struct spi_nor_manufacturer spi_nor_xmc = {

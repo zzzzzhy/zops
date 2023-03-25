@@ -112,12 +112,7 @@ case "$board" in
 		[ "$PHYNBR" = "0" ] && macaddr_add $hw_mac_addr 1 > /sys${DEVPATH}/macaddress
 		[ "$PHYNBR" = "1" ] && macaddr_add $hw_mac_addr 2 > /sys${DEVPATH}/macaddress
 		;;
-	zbtlink,z2101ax-nor-dsim|\
-	zbtlink,mt7621-rfb-ax-nor-z2101ax-dsim)
-		hw_mac_addr="$(mtd_get_mac_binary Factory 0x8004)"
-		[ "$PHYNBR" = "1" ] && echo $hw_mac_addr > /sys${DEVPATH}/macaddress
-		;;
-	ax5400p-rfb-nor)
+	rfb-ax5400p-nor)
 		hw_mac_addr="$(mtd_get_mac_binary Factory 0x4)"
 		[ "$PHYNBR" = "1" ] && macaddr_add $hw_mac_addr 1 > /sys${DEVPATH}/macaddress
 		;;
