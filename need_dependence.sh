@@ -11,6 +11,7 @@ CONFIG_PACKAGE_tc-tiny=y
 CONFIG_PACKAGE_ip-full=y
 CONFIG_PACKAGE_resolveip=y
 CONFIG_PACKAGE_coreutils-timeout=y
+CONFIG_PACKAGE_coreutils=y
 CONFIG_PACKAGE_coreutils-base64=y
 CONFIG_PACKAGE_libev=y
 CONFIG_PACKAGE_ipset=y

@@ -1,0 +1,34 @@
+--- a/drivers/usb/serial/option.c	2023-05-04 08:58:33.546134005 +0000
+--- b/drivers/usb/serial/option.c	2023-05-04 09:32:23.775249897 +0000
+@@ -589,6 +589,10 @@ static void option_instat_callback(struc
+ #define SIERRA_VENDOR_ID			0x1199
+ #define SIERRA_PRODUCT_EM9191			0x90d3
+ 
++/* YUGA PRODUCTS */
++#define YUGA_VENDOR_AC3				0x1286
++#define YUGA_PRODUCT_AC3			0x4E3C
++
+ /* Device flags */
+ 
+ /* Highest interface number which can be used with NCTRL() and RSVD() */
+@@ -608,6 +612,7 @@ static void option_instat_callback(struc
+ 
+ 
+ static const struct usb_device_id option_ids[] = {
++	{ USB_DEVICE(YUGA_VENDOR_AC3, YUGA_PRODUCT_AC3) },
+ 	{ USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_COLT) },
+ 	{ USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA) },
+ 	{ USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA_LIGHT) },
+@@ -2279,6 +2284,12 @@ static int option_probe(struct usb_seria
+ 	if (device_flags & NUMEP2 && iface_desc->bNumEndpoints != 2)
+ 		return -ENODEV;
+ 
++	if(serial->dev->descriptor.idVendor == YUGA_VENDOR_AC3 
++		&& serial->dev->descriptor.idProduct == YUGA_PRODUCT_AC3){
++		if(iface_desc->bInterfaceClass == 0 
++			|| iface_desc->bInterfaceClass == 1)
++			return -ENODEV;
++	}
+ 	/* Store the device flags so we can use them during attach. */
+ 	usb_set_serial_data(serial, (void *)device_flags);
+ 

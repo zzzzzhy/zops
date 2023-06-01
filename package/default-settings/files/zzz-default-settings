@@ -2,18 +2,23 @@
 . /lib/functions.sh
 
 board=$(board_name)
-model="${board#*-}"
+if [ "$board" == "unielec,u7628-01-16m" ] 
+then
+    model="Smart-4G"
+else
+    model="${board#*-}"
+fi
 uci set system.@system[0].hostname=$model
 uci set system.@system[0].timezone=CST-8
 uci set system.@system[0].zonename=Asia/Shanghai
 uci commit system
 
-sed -i '/REDIRECT --to-ports 53/d' /etc/firewall.user
-echo 'iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
-echo 'iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+# sed -i '/REDIRECT --to-ports 53/d' /etc/firewall.user
+# echo 'iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+# echo 'iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
 
-echo '[ -n "$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
-echo '[ -n "$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+# echo '[ -n "$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
+# echo '[ -n "$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
 
 #echo 'iptables -A OUTPUT -m string --string "api.installer.xiaomi.cn" --algo bm --to 65535 -j DROP' >> /etc/firewall.user
 [ "$model" == "wr619ac" ] && uci set wireless.radio1.channel=149
@@ -24,4 +29,21 @@ sed -i '/log-facility/d' /etc/dnsmasq.conf
 echo "log-facility=/dev/null" >> /etc/dnsmasq.conf
 
 uci commit wireless
+
+if [ "$model" = "Smart-4G" ] 
+then
+    uci set network.lte='interface'
+    uci set network.lte.proto='3g'
+    uci set network.lte.ipv6='auto'
+    uci set network.lte.service='umts'
+    uci set network.lte.device='/dev/ttyUSB4'
+    uci commit network
+    n=$(grep -n "option name		wan" /etc/config/firewall  |awk -F':' '{print $1}')
+    [ -n "$n" ] && sed -i "${n}i \        list network 'lte'" /etc/config/firewall
+    sed -i '/nameserver/d' /etc/crontabs/root
+    echo '* * * * * [ -z "$(grep 127.0.0.1 /tmp/resolv.conf)" ] && echo "nameserver 127.0.0.1" > /tmp/resolv.conf' >> /etc/crontabs/root
+    ( echo 0 > /sys/class/gpio/4g/value; sleep 5; echo 1 > /sys/class/gpio/4g/value ) &
+
+fi
+
 exit 0

@@ -38,45 +38,31 @@
 		compatible = "gpio-leds";
 
 		led_power: power {
-			label = "green:power";
+			label = "red:power";
 			gpios = <&gpio 44 GPIO_ACTIVE_LOW>;
 		};
 
-		wlan {
-			label = "green:wlan";
-			gpios = <&gpio 11 GPIO_ACTIVE_LOW>;
+		lan {
+			label = "green:lan";
+			gpios = <&gpio 40 GPIO_ACTIVE_LOW>;
 		};
 
 		wan {
 			label = "green:wan";
-			gpios = <&gpio 43 GPIO_ACTIVE_LOW>;
-		};
-
-		lan1 {
-			label = "green:lan1";
-			gpios = <&gpio 42 GPIO_ACTIVE_LOW>;
-		};
-
-		lan2 {
-			label = "green:lan2";
-			gpios = <&gpio 41 GPIO_ACTIVE_LOW>;
-		};
-
-		lan3 {
-			label = "green:lan3";
-			gpios = <&gpio 40 GPIO_ACTIVE_LOW>;
-		};
-
-		lan4 {
-			label = "green:lan4";
 			gpios = <&gpio 39 GPIO_ACTIVE_LOW>;
 		};
 
-		usb {
-			label = "green:usb";
-			gpios = <&gpio 37 GPIO_ACTIVE_LOW>;
-			trigger-sources = <&ohci_port1>, <&ehci_port1>;
-			linux,default-trigger = "usbport";
+		wwan {
+			label = "blue:wwan";
+			gpios = <&gpio 3 GPIO_ACTIVE_LOW>;
+		};
+	};
+	gpio_export {
+		compatible = "gpio-export";
+		4g {
+			gpio-export,name = "4g";
+			gpio-export,output = <0>;
+			gpios = <&gpio 11 GPIO_ACTIVE_LOW>;
 		};
 	};
 };
@@ -93,7 +79,7 @@
 
 &state_default {
 	gpio {
-		groups = "gpio", "p0led_an", "p1led_an", "p2led_an", "p3led_an", "p4led_an", "refclk", "wdt", "wled_an";
+		groups = "gpio", "p3led_an", "p4led_an", "refclk", "wdt", "wled_an";
 		function = "gpio";
 	};
 };
